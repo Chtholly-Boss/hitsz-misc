@@ -82,9 +82,46 @@
   (2) 写出 LR(1) 分析表
 ])
 
+(1) 画出识别活前缀的 DFA 的关键在于如何从一个项目出发构造出整个项目集。
+
+#clues.tip[
+    教材 5.3.4： 对 [A #to #sym.alpha #sym.dot B #sym.beta, a] ，若存在规范推导 $S #dto^\* #delta A a x #dto #delta #alpha B #beta a x$，且有 $#beta a x #dto^* b y$，则任意项目 [B #to #sym.dot #sym.eta, b] 也位于同一项目集中。
+
+    简单来说，某一个变量待约，则所有能约到它的项目都在同一项目集中，只需改变后继符即可。需要注意的是 $A #to #epsilon$ 仅有一个项目 $A #to #sym.dot$
+
+    项目集之间的转移十分符合直觉，无需死记硬背。
+]
+
+首先计算 $I_0 = "CLOSURE" ({[S' #to #sym.dot S, \#]})$，根据 CLOSURE 的定义，对每个形如 [A #to #sym.alpha #sym.dot B #sym.beta, a] 的项目，将 [B #to #sym.dot #sym.eta, FISRT(#beta a)] 加入闭包中，此处 $A = S', B = S, "FIRST"(#beta a) = {\#} $
+
+故加入如下项目：
+- [S #to #dot a A d, \#]
+- [S #to #dot b A c, \#]
+- [S #to #dot a e c, \#]
+- [S #to #dot b e d, \#]
+
+对于新增的项目，重复上述步骤，直到项目集不再变化。
+
+按以上步骤得到的项目集族如下图所示：
+
+#figure(
+  image("./assets/item-sets.png"), 
+  caption: "项目集族"
+)
+
+(2) 根据项目集族构造 LR(1) 分析表如下：
+
+#figure(
+  image("assets/lrtable.png"), 
+)
+#clues.tip[
+  每个项目集为一个状态，每个项目集的转移为状态转移，每个项目集的归约项目为归约动作（手动为产生式编号），每个项目集的移进项目为移进动作。
+]
+
 === Misc
 #ex([
-  - (2023 深圳) 有限状态自动机有且仅有一个唯一的终态. #ans([False])
   - (2023 深圳) 语法分析一定要消除左递归. #ans([(False)])
   - (2023 深圳) YACC 是词法分析程序的自动生成工具. #ans([(False)])
 ])
+
+// TODO 活前缀的概念
