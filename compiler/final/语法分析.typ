@@ -31,14 +31,59 @@
 因此，消除左递归后的文法为：
 #align(center)[
   $$
-    S #to ( T ) aP \
+    S #to ( T ) | aP \
     P #to S | #sym.epsilon \
     T #to S T' \
-    T' #to , S T'
+    T' #to , S T' | #epsilon
   $$
 ]
 
 (2) 
+#def[
+  $"FIRST"(#alpha) = {a | #alpha #dto^* a #beta, a #inset T, #beta #inset (V #sym.union T)^*}$， 即推导出的句型中的第一个终结符(如果存在)，如果 #alpha 可以推导出空串，则 $"FIRST"(#alpha) #sym.union {#epsilon}$。
+
+  $"FOLLOW"(A) = {a | S #dto^* #alpha A a #beta, a #inset T, #beta #inset (V #sym.union T)^*}$， 即 A 后面可能跟的终结符(如果存在)。如果 A 是句型的起始符号，则 $"FOLLOW"(A) #sym.union {\#}$。
+]
+
+// TODO 求解 FIRST 和 FOLLOW 集的算法
+对每一条产生式提取出非终结符之间的FIRST集和FOLLOW集依赖关系，然后从容易求解的非终结符开始即可。
+
+$
+    S #to ( T ) | a P      ,& "FIRST"(S)     #union= {'(', 'a'} \
+    P #to S | #sym.epsilon ,& "FIRST"(P)#union = "FIRST"(S) #union {#epsilon}\
+    T #to S T'             ,& "FIRST"(T)              #union = "FIRST" (S) \
+    T' #to , S T'          ,& "FIRST"(T')          #union = {',', #epsilon} \
+$
+
+$
+  
+    S #to ( T ) | a P ,       & "FOLLOW"(T) #union= ')', \ 
+                              &"FOLLOW"(P) #union= "FOLLOW"(S) \
+    P #to S | #sym.epsilon ,  & "FOLLOW"(S) #union= "FOLLOW"(P)  \
+    T #to S T' ,              & "FOLLOW"(T') #union= "FOLLOW"(T) \
+                              &"FOLLOW"(S) #union="FIRST"(T')+"FOLLOW"(T)\
+    T' #to , S T' | #epsilon ,& "FOLLOW"(S) #union= "FOLLOW"(T')+"FIRST"(T')
+$
+
+不难得到答案为：
+#table(
+  columns: 3,
+  align: center, 
+  [], [FIRST], [FOLLOW],
+  [S], ['(', a], [',', ')', \#],
+  [P], ['(', a, #epsilon], [',', ')', \#],
+  [T], ['(', a], [')'],
+  [T'], [',', #epsilon], [')'],
+)
+
+#def[
+  LL(1) 文法：对于任意产生式 $A #to #alpha | #beta$，若有以下条件成立：
+  - 若 #alpha 和 #beta 均不能推导出空串，则需 $"FIRST"(#alpha) #sym.sect "FIRST"(#beta) = #sym.emptyset$
+  - #alpha 和 #beta 至多有一个能推导出空串
+  - 若 $#beta #dto^* #epsilon$， 则需 $"FIRST"(#alpha) #sect "FOLLOW"(#beta) = #empty$
+
+  判断一个文法是否为 LL (1) 文法，只需对所有非终结符 $A$ 检查上述条件即可。
+]
 
 === 自底向上分析
 
@@ -53,16 +98,17 @@
   - (2023 深圳)  LR(1)是自底向上分析的一种方法. #ans([True])
 ])
 
-#synex([
-  (2020 深圳) 有文法如下：
-  #align(center)[
-    $$
-    S #to b | ^ | ( T ) \
-    T #to T \* S | S  
-    $$
-  ]
-  求 FISRTOP(T)
-])
+// TODO: 算符优先文法 FIRSTOP 集的求法
+// #synex([
+//   (2020 深圳) 有文法如下：
+//   #align(center)[
+//     $$
+//     S #to b | ^ | ( T ) \
+//     T #to T \* S | S  
+//     $$
+//   ]
+//   求 FISRTOP(T)
+// ])
 
 
 #synex([

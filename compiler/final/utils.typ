@@ -19,3 +19,9 @@
 #let dto = sym.arrow.double
 // Miscelaneous
 #let dot = sym.dot
+#let inset = sym.in
+
+// 集合符号
+#let union = sym.union
+#let sect = sym.sect
+#let empty = sym.emptyset
