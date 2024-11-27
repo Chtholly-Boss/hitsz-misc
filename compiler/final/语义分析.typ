@@ -28,19 +28,6 @@
 ])
 
 
-#synex([
-  填写下面的空白：
-  #align(center)[
-    $B #to B_1 "or" M B_2$
-
-    {
-      backpatch(B1.falselist, M.quad); \
-      B.truelist := #ans([merge(B1.truelist, B2.truelist)]); \
-      B.falselist:= #ans([B2.falselist]);}
-    }
-  ]
-])
-
 == 翻译模式
 
 翻译模式是语法制导定义的一种便于实现的书写形式。其中属性与文法符号相关联，语义规则或语义动作用花括号 {} 括起来，并可被插入到产生式右部的任何合适的位置上。
@@ -146,6 +133,47 @@ L-属性定义的概念已作为名词解释考察过，S-属性定义则常在�
   显然为 S 属性。
 ])
 
+== 常见语句的翻译
+假定所有翻译得到的指令（四元式）存储在一张表中，并按照顺序编号。
+
+#figure(
+  image("assets/trans-ctrl.png"), 
+  caption: [
+    控制语句的翻译，摘自 PPT
+  ]
+)
+上图能够生效的原因是我们已经拥有了一棵显式的语法分析树，在生成跳转语句时已知目标跳转地址 `B.true, B.false`，因此可以直接进行翻译。
+
+当我们没有显式的语法分析树时，需要借助回填式翻译，即先生成跳转语句，再回填跳转地址。
+
+#figure(
+  image("assets/trans-backpatch.png"),
+  caption: [
+    回填式翻译 OR 条件语句，摘自 PPT
+  ]
+)
+
+#figure(
+  image("assets/trans-back2.png", height: 250pt), 
+  caption: [
+    回填式翻译 AND 条件语句，摘自 PPT
+  ]
+)
+
+#synex([
+  填写下面的空白：
+  #align(center)[
+    $B #to B_1 "or" M B_2$
+
+    {
+      backpatch(B1.falselist, M.quad); \
+      B.truelist := #ans([merge(B1.truelist, B2.truelist)]); \
+      B.falselist:= #ans([B2.falselist]);}
+    }
+  ]
+])
+
+
 == 概念解释
 
 #ex([
@@ -153,3 +181,8 @@ L-属性定义的概念已作为名词解释考察过，S-属性定义则常在�
   - (2023 深圳) 语法制导翻译是指 #ans([将静态检查和中间代码生成结合到语法分析中进行的技术])
   - (2023 深圳) S 属性用于自顶向下传递信息 #ans[(False)]
 ])
+
+#clues.example(title: "More Examples")[
+  - 类型综合：从子表达式的类型确定表达式的类型
+  - 类型推断：根据语言结构的使用方式来确定其类型 
+]

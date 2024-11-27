@@ -84,6 +84,29 @@ $
   判断一个文法是否为 LL (1) 文法，只需对所有非终结符 $A$ 检查上述条件即可。
 ]
 
+(3) 根据上述 FIRST 和 FOLLOW 集构造 LL(1) 分析表如下：
+#figure(
+  image("assets/lltable.png"), 
+  caption: "LL(1) 分析表"
+)
+
+根据 LL (1) 分析表对输入串进行分析的过程较为直接，即根据符号栈栈顶及输入缓冲区的当前符号查表即可，格式类似下表：
+#figure(
+  grid(rows: 2, 
+  image("assets/llanalyse1.png"),
+  image("assets/llanalyse.png"),
+  ), 
+  caption: [
+    LL(1) 分析过程格式示例，笔者太懒了，有时间再补上对本题的具体举例
+  ]
+)
+
+#clues.tip[
+  对每一个产生式$A arrow.r alpha $进行考察：
+  - $forall a in "FIRST"(alpha)$，将 $A #to alpha$ 加入 $M[A,a]$ 中
+  - 若 $epsilon in "FIRST"(alpha)$， 则 $forall a in "FOLLOW"(A)$，将 $A #to alpha$ 加入 $M[A,a]$ 中，包括 \#
+]
+
 == 自底向上分析
 
 #ex([
@@ -97,17 +120,6 @@ $
   - (2023 深圳)  LR(1)是自底向上分析的一种方法. #ans([True])
 ])
 
-// TODO: 算符优先文法 FIRSTOP 集的求法
-// #synex([
-//   (2020 深圳) 有文法如下：
-//   #align(center)[
-//     $$
-//     S #to b | ^ | ( T ) \
-//     T #to T \* S | S  
-//     $$
-//   ]
-//   求 FISRTOP(T)
-// ])
 
 
 #synex([
@@ -163,10 +175,42 @@ $
   每个项目集为一个状态，每个项目集的转移为状态转移，每个项目集的归约项目为归约动作（手动为产生式编号），每个项目集的移进项目为移进动作。
 ]
 
+使用 LR(1) 分析表对输入串进行分析的过程较为直接，即根据符号栈栈顶及输入缓冲区的当前符号查Action表：
+- 若为移进动作，则将当前符号压入符号栈，并将新状态压入状态栈
+- 若为归约动作，则弹出相应数量的符号栈元素和状态栈元素，将产生式左部压入符号栈，根据当前状态栈顶和符号栈顶查GOTO表，将新状态压入状态栈
+
+#figure(
+  image("assets/lranalyse.png"), 
+  caption: [
+    LR(1) 分析过程格式示例，摘自作业答案，有时间再补上对本题的具体举例
+  ]
+)
+
 === Misc
 #ex([
   - (2023 深圳) 语法分析一定要消除左递归. #ans([(False)])
   - (2023 深圳) YACC 是词法分析程序的自动生成工具. #ans([(False)])
 ])
 
-// TODO 活前缀的概念
+#synex([
+  (2020 深圳) 有文法如下：
+  #align(center)[
+    $$
+    S #to b | ^ | ( T ) \
+    T #to T \* S | S  
+    $$
+  ]
+  求 FISRTOP(T)
+])
+
+此处附上算符优先文法的题型，防骗防偷袭。
+
+#clues.tip[
+  - $"FIRSTOP"(B) = {b | B #dto^+ b... or B #dto^+ C b ..., b in T, C in V}$
+
+  - $"LASTOP"(B) = {b | B #dto^+ ...b or B #dto^+ ...b C, b in T, C in V}$
+]
+
+此题较为简单，由 $T #to S$ 容易知道 $b, \^, '(' in "FIRSTOP"(T)$，再由 $T #to T \* S$ 可知 $* in "FIRSTOP"(T)$，故 $"FIRSTOP"(T) = {b, \^, '(', *}$
+
+知道定义便不难，此处不再赘述。
