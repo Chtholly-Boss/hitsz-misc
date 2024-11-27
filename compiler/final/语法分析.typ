@@ -1,8 +1,8 @@
 #import "utils.typ": *
 
-== 语法分析
+= 语法分析
 
-=== 自顶向下分析
+== 自顶向下分析
 
 #ex([
   - (2023 深圳) 递归下降分析法是 #ans[自顶向下分析] 的一种方法
@@ -45,7 +45,6 @@
   $"FOLLOW"(A) = {a | S #dto^* #alpha A a #beta, a #inset T, #beta #inset (V #sym.union T)^*}$， 即 A 后面可能跟的终结符(如果存在)。如果 A 是句型的起始符号，则 $"FOLLOW"(A) #sym.union {\#}$。
 ]
 
-// TODO 求解 FIRST 和 FOLLOW 集的算法
 对每一条产生式提取出非终结符之间的FIRST集和FOLLOW集依赖关系，然后从容易求解的非终结符开始即可。
 
 $
@@ -85,7 +84,7 @@ $
   判断一个文法是否为 LL (1) 文法，只需对所有非终结符 $A$ 检查上述条件即可。
 ]
 
-=== 自底向上分析
+== 自底向上分析
 
 #ex([
   - (2023 深圳) LR 分析表中 s4 表示 #ans[从缓冲区中读取一个字符并跳转到状态 4]
@@ -112,16 +111,16 @@ $
 
 
 #synex([
-  (2023 深圳) 有文法如下：
+  (2023 深圳改编) 有文法如下：
   #align(center)[
-    $$
+    $
       S' #to S \
-      S #to aAd \
-      S #to bAc \
-      S #to aec \
-      S #to bed \
-      A #to e
-    $$
+      S #to a A d \
+      S #to b A c \
+      S #to a e c \
+      S #to b e d \
+      A #to epsilon "(原题为 A" #to "e)"
+    $
   ]
   (1) 写出识别活前缀的 DFA
   

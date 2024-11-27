@@ -36,24 +36,24 @@
 
 记 LABEL = l, 我们重写文法为:
 #align(center)[
-  #v[S0] #to l #v[S1] \
-  #v[S1] #to d #v[S3] \
-  #v[S2] #to d #v[S3] \
-  #v[S3] #to d #v[S3] | , #v[S2] | ;
+  S0 #to l S1 \
+  S1 #to d S3 \
+  S2 #to d S3 \
+  S3 #to d S3 | , S2 | ;
 ]
 
 注意到最后一条产生式中，右边出现了编号小于左边的非终结符，我们考虑将其进行代换，得到:
 #align(center)[
-  #v[S3] #to d #v[S3] | , d#v[S3] | ; \
+  S3 #to d S3 | , d S3 | ; \
 ]
 
-进一步化简得: $#v[S3] #to (d | ,d)^\* ;$
+进一步化简得: $S_3 #to (d | ,d)^\* ;$
 
 因此我们可以得到 S0 所产生语言的正则表达式为: 
 #align(center)[
   $
-    #v[S0]  &#to l #v[S1] \
-            &#to l d #v[S3] \
+    S_0  &#to l S_1 \
+            &#to l d S_3 \
             &#to l d (d | ,d)^\* ; \
             &= "LABEL" d (d | ,d)^\* ; \
   $     
