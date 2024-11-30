@@ -167,3 +167,27 @@ perf stat ./dist/bins/lab1_gemm 256 256 256
 # 查看指定的性能事件(-e)
 perf stat -e L1-dcache-loads,L1-dcache-load-misses ./lab1_gemm 256 256 256
 ```
+
+结果如下：
+#stack(
+  dir: ttb,
+  spacing: 1em,
+  figure(
+    image("../assets/perf-list.jpg"),
+    caption: [
+      perf 基本性能事件
+    ]
+  ),
+  figure(
+    image("../assets/lab1-perf1.jpg"),
+    caption: [
+      perf 基本性能事件
+    ]
+  ),
+  figure(
+    image("../assets/lab1-perf2.jpg"),
+    caption: [
+      perf 指定性能事件
+    ]
+  )
+)

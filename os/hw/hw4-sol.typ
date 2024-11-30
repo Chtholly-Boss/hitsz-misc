@@ -1,4 +1,4 @@
-#import "../macros.typ"
+#import "./macros.typ"
 = Part I: I/O 与存储
 A 
 C // 多重中断的情况下，会处理更高优先级的中断

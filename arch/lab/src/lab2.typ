@@ -57,9 +57,15 @@ cmake -B . -S ../ && cmake --build ./ --target lab2_gemm_opt_prefetch
 ```sh
 mkdir -p build && cd build
 cmake -B . -S ../ && cmake --build ./ --target lab2_gemm_baseline
-perf stat -e l2_rqsts.code_rd_hit,l2_rqsts.references,l2_rqsts.pf_hit,l2_rqsts.pf_miss,L1-dcache-loads,L1-dcache-load-misses ./dist/bins/lab2_gemm_baseline 1024 1024 1024
+perf stat -e l2_rqsts.code_rd_hit,l2_rqsts.references,l2_rqsts.pf_hit,l2_rqsts.pf_miss,L1-dcache-loads,L1-dcache-load-misses ./dist/bins/lab2_gemm_baseline 256 1024 256
 ```
-// TODO: 这里最好有图
+
+#figure(
+  image("../assets/lab2-perf.jpg"), 
+  caption: [
+    perf 测试结果
+  ]
+)
 
 == 利用预取技术优化性能
 === 预取指令概述

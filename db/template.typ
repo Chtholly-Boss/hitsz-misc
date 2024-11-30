@@ -1,23 +1,30 @@
-#import "@preview/gentle-clues:1.0.0" as clues
+#import "@preview/gentle-clues:1.0.0" as gc
 
 #let author = "Chtholly Boss"
-#let subject = "数据库系统概念"
 
-// * DIY emph *
-#let apply-emph(body) = {
-  show emph: it => underline(it, offset: 0.1em, evade: false)
-  show emph: set text(blue)
-  body
-}
-
-// * DIY strong *
-#let apply-strong(body) = {
-  show strong: set text(red)
-  body
-}
-
-// template
+// * Global Settings
 #let apply-template(body) = {
+  
+  show emph: it => {
+    set text(rgb("#e67700"))
+    underline(it)
+  }
+
+  body
+}
+
+#let apply-header(body) = {
+  show heading.where(level: 1): set heading(numbering: "一、")
+  show heading.where(level: 2): set heading(
+    numbering: (.., num) => {
+      str(num) + ". "
+    })
+  show heading.where(level: 3): set heading(
+    numbering: (..nums) => {
+      let n = nums.pos().map(str)
+      n.at(1) + "." + n.at(2) + ". "
+    }
+  )
   body
 }
 
@@ -26,19 +33,59 @@
 #let dto = math.op($arrow.r.double$)
 
 // * Admonitions
-#let memo = clues.memo.with(title: "Remember")
+#show: gc.gentle-clues.with(
+  breakable: true,
+  stroke-width: 0.3em,
+  border-width: 0.2em,
+)
 
-// * Layout
-#let grid-left-right(l, r, rev: false, ratio: (1fr, 1fr)) = {
-  let gl = l 
-  let gr = r
-  if rev {
-    gl = r
-    gr = l
-  }
+#let pitfall(content) = gc.clue(
+  content,
+  // accent-color: rgb("#b2b6b6"),
+  title: "Pitfall",
+  icon: image("assets/pitfall.svg"),
+)
 
-  grid(
-    columns: ratio,
-    gl, gr
+#let idea(content) = gc.idea(content)
+// #let board(content) = gc.
+#let board(content) = {
+  show: gc.gentle-clues.with(headless: true) 
+  gc.example(
+    content
+  )
+}
+
+// * Emojis 
+#let inline-emoji(path) = box(
+  baseline: 20%,
+  height: 1.2em,
+  image(path)
+)
+
+#let yes = inline-emoji("assets/true.svg")
+#let no = inline-emoji("assets/false.svg")
+
+// * Template Libraries
+#let qs(question, solution) = {
+  set box(
+    outset: 0.5em,
+    width: 100%, 
+    )
+  box(
+    fill: rgb("#ffec99"),
+    radius: 0.6em,
+    stroke: black,
+    stack(
+      dir: ttb, 
+      spacing: 0.8em,
+      box(stroke: (bottom: 2pt))[
+        Question: \
+        #question
+      ],
+      box()[
+        Solution: \
+        #solution
+      ]
+    )
   )
 }
