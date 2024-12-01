@@ -1,15 +1,37 @@
 #import "@preview/gentle-clues:1.0.0" as gc
+#import "@preview/gentle-clues:1.0.0": gentle-clues
 
 #let author = "Chtholly Boss"
 
 // * Global Settings
 #let apply-template(body) = {
-  
+  set page(
+    footer: context [
+      #set align(right)
+      #set text(size: 10pt)
+        #line(length: 100%)
+      #counter(page).display("1")
+    ] 
+  ) 
   show emph: it => {
     set text(rgb("#e67700"))
     underline(it)
   }
+  show link: it => {
+    set text(blue)
+    underline(it)
+  }
 
+  // * Admonitions
+  show: gc.gentle-clues.with(
+    breakable: true,
+    stroke-width: 0.3em,
+    border-width: 0.2em,
+  )
+
+  show math.equation: it => {
+    math.display(it)
+  }
   body
 }
 
@@ -32,12 +54,6 @@
 #let to = math.op($arrow.r$)
 #let dto = math.op($arrow.r.double$)
 
-// * Admonitions
-#show: gc.gentle-clues.with(
-  breakable: true,
-  stroke-width: 0.3em,
-  border-width: 0.2em,
-)
 
 #let pitfall(content) = gc.clue(
   content,
@@ -49,10 +65,11 @@
 #let idea(content) = gc.idea(content)
 // #let board(content) = gc.
 #let board(content) = {
-  show: gc.gentle-clues.with(headless: true) 
+  show: gc.gentle-clues.with(headless: true, breakable: true) 
   gc.example(
     content
   )
+  show: gc.gentle-clues.with(headless: false)
 }
 
 // * Emojis 
@@ -68,24 +85,36 @@
 // * Template Libraries
 #let qs(question, solution) = {
   set box(
-    outset: 0.5em,
+    outset: 0.3em,
     width: 100%, 
     )
-  box(
-    fill: rgb("#ffec99"),
-    radius: 0.6em,
-    stroke: black,
-    stack(
-      dir: ttb, 
-      spacing: 0.8em,
-      box(stroke: (bottom: 2pt))[
-        Question: \
-        #question
-      ],
-      box()[
-        Solution: \
-        #solution
-      ]
-    )
+  stack(
+    dir: ttb,
+    board[
+      #text(fill: blue)[*Question*: ]
+      \ #question
+    ], 
+    board[
+      #text(fill: green)[*Solution*: ]\ #solution
+    ]
   )
+}
+
+#let fill_blank(content, src: [2023年深圳]) = {
+  [(#src) #content] 
+}
+
+#let mooc(content) = fill_blank(content, src: "MOOC")
+#let choice(q, ans: none, dir: ltr, a: none, b: none, c: none, d: none) = {
+    q 
+    [( #emph(ans) ) ]
+    stack(
+      dir: dir,
+      // spacing: 4em,
+      spacing: if dir == ltr {1fr} else { 1em }, 
+      [A. #a],
+      [B. #b],
+      [C. #c],
+      [D. #d],
+    )
 }
