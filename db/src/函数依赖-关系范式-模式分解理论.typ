@@ -65,10 +65,8 @@ c: [完全函数依赖],
 d: [传递函数依赖],
 ans: [B]
 ))
-
 ]
 
-    ))  
 #qs[
 #fill_blank[R(A, B, C, D, E, F, G), 函数依赖集 F为 ${A to B, B to D, "AD" to "EF", "AG" to C}$, 求 A 关于 F 的属性闭包]
 ][

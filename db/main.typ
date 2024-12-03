@@ -20,3 +20,13 @@
 #pagebreak()
 #include "src/数据库索引技术.typ"
 #pagebreak()
+#include "src/存储管理.typ"
+#pagebreak()
+#include "src/数据库查询实现算法.typ"
+#pagebreak()
+#include "src/查询优化技术.typ"
+#pagebreak()
+#include "src/事务处理技术.typ"
+#pagebreak()
+#include "src/misc.typ"
+
