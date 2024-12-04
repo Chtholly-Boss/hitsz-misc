@@ -32,6 +32,8 @@
   show math.equation: it => {
     math.display(it)
   }
+
+  set table(align: center+horizon)
   body
 }
 
@@ -52,25 +54,6 @@
 
 // * Math Operators
 #let to = math.op($arrow.r$)
-#let dto = math.op($arrow.r.double$)
-
-
-#let pitfall(content) = gc.clue(
-  content,
-  // accent-color: rgb("#b2b6b6"),
-  title: "Pitfall",
-  icon: image("assets/pitfall.svg"),
-)
-
-#let idea(content) = gc.idea(content)
-// #let board(content) = gc.
-#let board(content) = {
-  show: gc.gentle-clues.with(headless: true, breakable: true) 
-  gc.example(
-    content
-  )
-  show: gc.gentle-clues.with(headless: false)
-}
 
 // * Emojis 
 #let inline-emoji(path) = box(
@@ -79,32 +62,37 @@
   image(path)
 )
 
-#let yes = inline-emoji("assets/true.svg")
-#let no = inline-emoji("assets/false.svg")
-
+#let board(content) = {
+  show: gc.gentle-clues.with(headless: true, breakable: true) 
+  gc.example(
+    content
+  )
+  show: gc.gentle-clues.with(headless: false)
+}
 // * Template Libraries
-#let qs(question, solution) = {
+#let qs(q, a, rel: none) = {
   set box(
     outset: 0.3em,
     width: 100%, 
     )
+
   stack(
     dir: ttb,
     board[
-      #text(fill: blue)[*Question*: ]
-      \ #question
+      #text(fill: red)[*Question*: ]
+      \ #q
     ], 
     board[
-      #text(fill: green)[*Solution*: ]\ #solution
-    ]
+      #text(fill: green)[*Solution*: ]\ #a
+    ],
+    if rel != none {
+      board[
+        #text(fill: blue)[*Related Problem*: ]\ #rel
+      ]
+    }
   )
 }
 
-#let fill_blank(content, src: [2023年深圳]) = {
-  [(#src) #content] 
-}
-
-#let mooc(content) = fill_blank(content, src: "MOOC")
 #let choice(q, ans: none, dir: ltr, a: none, b: none, c: none, d: none) = {
     q 
     [( #emph(ans) ) ]
@@ -118,3 +106,14 @@
       [D. #d],
     )
 }
+
+#let judge(q, ans: false) = {
+  q
+  if ans {
+    inline-emoji("assets/true.svg")
+  } else {
+    inline-emoji("assets/false.svg")
+  }
+}
+
+#let b = "_____"

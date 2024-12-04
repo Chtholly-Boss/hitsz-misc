@@ -6,27 +6,24 @@
 
 #show: apply-header
 
-#include "src/数据库基本概念.typ"
+#include "src/0数据库基本概念.typ"
 #pagebreak()
-#include "src/关系模型与关系代数.typ"
+#include "src/1关系模型与关系代数.typ"
 #pagebreak()
-#include "src/SQL语言.typ"
+#include "src/2SQL语言.typ"
 #pagebreak()
-#include "src/数据库的安全性与完整性.typ"
+#include "src/3数据库的安全性与完整性.typ"
 #pagebreak()
-#include "src/数据库设计与ER模型.typ"
+#include "src/4数据库设计与ER模型.typ"
 #pagebreak()
-#include "src/函数依赖-关系范式-模式分解理论.typ"
+#include "src/5函数依赖-关系范式-模式分解理论.typ"
 #pagebreak()
-#include "src/数据库索引技术.typ"
+#include "src/6数据库索引技术.typ"
 #pagebreak()
-#include "src/存储管理.typ"
+#include "src/7存储管理.typ"
 #pagebreak()
-#include "src/数据库查询实现算法.typ"
+#include "src/8数据库查询实现算法.typ"
 #pagebreak()
-#include "src/查询优化技术.typ"
+#include "src/9查询优化技术.typ"
 #pagebreak()
-#include "src/事务处理技术.typ"
-#pagebreak()
-#include "src/misc.typ"
-
+#include "src/10事务处理技术.typ"
