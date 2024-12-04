@@ -2,8 +2,6 @@
 
 #show: apply-template
 
-// Include Source Files Below
-
 #show: apply-header
 
 #include "src/0数据库基本概念.typ"
@@ -21,7 +19,7 @@
 #include "src/6数据库索引技术.typ"
 #pagebreak()
 #include "src/7存储管理.typ"
-#pagebreak()
+#pagebreak()···
 #include "src/8数据库查询实现算法.typ"
 #pagebreak()
 #include "src/9查询优化技术.typ"
