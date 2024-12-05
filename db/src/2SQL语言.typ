@@ -18,13 +18,13 @@ DML
 #qs([
 SQL 语句 `select stu_id from Student where age>18 or age<22 and department=”计算机”` 的含义是 #b
 ],[
-列出计算机系中年龄大于18岁或小于22岁的学生的学号
-
+列出年龄大于18岁或计算机系中小于22岁的学生的学号
+- 优先级：and > or
 本题考察 SQL 语句，SQL 的语法较为简单，此处不再赘述，可直接翻看 Lec3 PPT
 ])
 
 #qs([
-‍在SQL中，与"NOT IN"等价的操作符是 #b
+‍ 在 SQL中，与"NOT IN"等价的操作符是 #b
 ],[
 <> ALL
 ])

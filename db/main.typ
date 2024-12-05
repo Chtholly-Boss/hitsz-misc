@@ -2,6 +2,10 @@
 
 #show: apply-template
 
+TODO:
+- 数据库设计与ER模型
+- 索引技术（B+树）
+
 #show: apply-header
 
 #include "src/0数据库基本概念.typ"

@@ -1,5 +1,6 @@
 #import "@preview/gentle-clues:1.0.0" as gc
 #import "@preview/gentle-clues:1.0.0": gentle-clues
+#import "@preview/cetz:0.3.1"
 
 #let author = "Chtholly Boss"
 
