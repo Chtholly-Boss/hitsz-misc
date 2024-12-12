@@ -190,4 +190,4 @@ perf stat -e L1-dcache-loads,L1-dcache-load-misses ./lab1_gemm 256 256 256
       perf 指定性能事件
     ]
   )
-)
+)a
